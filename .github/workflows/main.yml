@@ -12,6 +12,7 @@ jobs:
   run-tests:
     name: Exécution des test
     runs-on: windows
+    needs: install-dependencies
     steps:
       - uses: actions/checkout@v4
       - run: behave
