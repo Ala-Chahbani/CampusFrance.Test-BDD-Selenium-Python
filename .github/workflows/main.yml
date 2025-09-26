@@ -1,0 +1,16 @@
+on:
+  push
+
+jobs:
+  install-dependencies:
+    name: Installation de dépendences
+    runs-on: windows
+    steps:
+      - run: py -m pip install --upgrade pip
+      - run: pip install -U selenium
+      - run: pip install -U behave
+  run-tests:
+    name: Exécution des test
+    runs-on: windows
+    steps:
+      - run: behave
