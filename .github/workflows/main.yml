@@ -13,6 +13,5 @@ jobs:
     name: Exécution des test
     runs-on: windows
     steps:
-      - run: ls
-      - run: ls features
+      - uses: actions/checkout@v4
       - run: behave
