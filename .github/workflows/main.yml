@@ -13,4 +13,6 @@ jobs:
     name: Exécution des test
     runs-on: windows
     steps:
+      - run: ls
+      - run: ls features
       - run: behave
