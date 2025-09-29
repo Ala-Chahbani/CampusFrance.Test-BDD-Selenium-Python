@@ -2,17 +2,36 @@ on:
   push
 
 jobs:
-  install-dependencies:
+  dependencies:
     name: Installation de dépendences
     runs-on: windows
     steps:
       - run: py -m pip install --upgrade pip
       - run: pip install -U selenium
       - run: pip install -U behave
-  run-tests:
+      - run: pip install -U junit2html
+
+  test:
     name: Exécution des test
     runs-on: windows
-    needs: install-dependencies
+    needs: dependencies
     steps:
       - uses: actions/checkout@v4
-      - run: behave
+      - run: behave --junit
+
+  report:
+    name: Génération de rapport de test
+    runs-on: windows
+    needs: test
+    steps:
+      - run: junit2html (Get-ChildItem -Path reports -Filter *.xml).FullName test-report.html
+
+  archive:
+    name: Archivage du rapport de test
+    runs-on: windows
+    needs: report
+    steps:
+      - uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: test-report.html
